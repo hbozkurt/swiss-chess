@@ -1,0 +1,14 @@
+src/components/rounds/ResultEntryRow.tsx
+  h_c457053ef2dd97 50
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "a3a3a23fac68e5923a8426580fa74623cbbbc067",
+  "prompts": {},
+  "humans": {
+    "h_c457053ef2dd97": {
+      "author": "Hasan Bozkurt <hb3517@gmail.com>"
+    }
+  }
+}
