@@ -113,6 +113,42 @@ describe('full tournament lifecycle: pair -> result -> edit -> cascade -> re-pai
   });
 });
 
+describe('tournament status transitions', () => {
+  it('moves from setup -> in_progress -> completed as rounds are played out', async () => {
+    const { tournament } = setUpTournament(4, 2);
+    expect(tournamentRepo.getTournament(db, tournament.id)!.status).toBe('setup');
+
+    await generateNextRound(db, tournament.id); // round 1, no results entered yet
+    expect(tournamentRepo.getTournament(db, tournament.id)!.status).toBe('in_progress');
+
+    const round1 = roundRepo.findLiveRounds(db, tournament.id)[0]!;
+    const round1Games = gameRepo.getGamesByRound(db, round1.id).filter((g) => g.blackPlayerId !== null);
+
+    // Enter only one of the two results — tournament must still be in_progress.
+    await updateGameResult(db, round1Games[0]!.id, { result: 1, kind: null });
+    expect(tournamentRepo.getTournament(db, tournament.id)!.status).toBe('in_progress');
+
+    await updateGameResult(db, round1Games[1]!.id, { result: 1, kind: null });
+    expect(tournamentRepo.getTournament(db, tournament.id)!.status).toBe('in_progress'); // round 2 still to come
+
+    await playRound(tournament.id);
+    expect(tournamentRepo.getTournament(db, tournament.id)!.status).toBe('completed');
+  });
+
+  it('reverts to in_progress when a cascade invalidates rounds after completion', async () => {
+    const { tournament } = setUpTournament(4, 2);
+    await playRound(tournament.id);
+    await playRound(tournament.id);
+    expect(tournamentRepo.getTournament(db, tournament.id)!.status).toBe('completed');
+
+    const round1 = roundRepo.findLiveRounds(db, tournament.id)[0]!;
+    const gameToEdit = gameRepo.getGamesByRound(db, round1.id)[0]!;
+    await updateGameResult(db, gameToEdit.id, { result: 0, kind: null }, { confirmed: true });
+
+    expect(tournamentRepo.getTournament(db, tournament.id)!.status).toBe('in_progress');
+  });
+});
+
 describe('getStandings', () => {
   it('ranks an undefeated player first and credits bye points toward score', async () => {
     const { tournament, players } = setUpTournament(5, 1);

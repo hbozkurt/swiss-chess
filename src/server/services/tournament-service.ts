@@ -97,6 +97,31 @@ function previewCascade(db: DbOrTx, tournamentId: string, roundNumber: number): 
 export type UpdateResultOutcome = { status: 'confirmation_required'; preview: ResultEditPreview } | { status: 'applied' };
 
 /**
+ * Marks the given round `completed` once every one of its games has a
+ * result, and recomputes the tournament's overall status: `completed` once
+ * every live round up to `totalRounds` has every game resolved, `in_progress`
+ * otherwise. Called after every result write so the tournament doesn't get
+ * stuck `in_progress` once the final round's last result is entered.
+ */
+function recomputeCompletionStatus(tx: DbOrTx, tournamentId: string, roundId: string): void {
+  const roundGames = gameRepo.getGamesByRound(tx, roundId);
+  if (roundGames.length > 0 && roundGames.every((g) => g.result !== null)) {
+    roundRepo.markCompleted(tx, roundId);
+  }
+
+  const tournament = tournamentRepo.getTournament(tx, tournamentId);
+  if (!tournament) return;
+  const liveRounds = roundRepo.findLiveRounds(tx, tournamentId);
+  const allRoundsResolved =
+    liveRounds.length === tournament.totalRounds &&
+    liveRounds.every((r) => {
+      const games = gameRepo.getGamesByRound(tx, r.id);
+      return games.length > 0 && games.every((g) => g.result !== null);
+    });
+  tournamentRepo.setTournamentStatus(tx, tournamentId, allRoundsResolved ? 'completed' : 'in_progress');
+}
+
+/**
  * Updates a game's result. If live rounds exist after the game's round, the
  * caller must pass `confirmed: true` (after showing the arbiter the preview)
  * — the update then cascades: later rounds are soft-invalidated and an audit
@@ -138,9 +163,9 @@ export async function updateGameResult(
         tx,
         laterRounds.map((r) => r.id),
       );
-      tournamentRepo.setTournamentStatus(tx, round.tournamentId, 'in_progress');
     }
     gameRepo.auditedUpdateResult(tx, gameId, update);
+    recomputeCompletionStatus(tx, round.tournamentId, round.id);
   });
 
   return { status: 'applied' };
