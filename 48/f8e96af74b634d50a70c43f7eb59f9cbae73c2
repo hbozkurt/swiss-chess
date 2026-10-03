@@ -1,0 +1,24 @@
+src/server/services/tournament-service.test.ts
+  s_c6cac961cd7409::t_a1f90fc26611ce 121,124,126-127
+  s_c6cac961cd7409::t_c19bbc1668a1cb 116-120,122-123,125,128-151
+src/server/services/tournament-service.ts
+  s_c6cac961cd7409::t_8cb3f447d77fee 100-123
+  s_c6cac961cd7409::t_0a33997116cb1c 168
+  s_c6cac961cd7409::t_7ea4ebd4801efb 99
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "48f8e96af74b634d50a70c43f7eb59f9cbae73c2",
+  "prompts": {},
+  "sessions": {
+    "s_c6cac961cd7409": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b9e42927-6bc1-484d-bd4a-304bb4506c8d",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Hasan Bozkurt <hb3517@gmail.com>"
+    }
+  }
+}
