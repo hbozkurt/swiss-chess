@@ -1,0 +1,81 @@
+src/hooks/useLocale.ts
+  s_c6cac961cd7409::t_459005a1c34533 1-13
+src/components/LocaleProvider.tsx
+  s_c6cac961cd7409::t_917014645398d6 1-18
+src/components/standings/StandingsTable.tsx
+  s_c6cac961cd7409::t_4e53a7bf0d0f29 1,6,14-19,21-22,24-25,27-28,30-31
+  s_c6cac961cd7409::t_49eef0284c58f2 40
+src/app/tournaments/[id]/rounds/[round]/page.tsx
+  s_c6cac961cd7409::t_64f9de83ba45df 5,44,52,58,68,72
+src/components/pdf/PairingSheetDocument.tsx
+  s_c6cac961cd7409::t_49843ce77c0a23 2,28,30-33,40
+src/components/rounds/PairingTable.tsx
+  s_c6cac961cd7409::t_5c54a2e93e49ab 5,12,45,58-61
+locales/tr.json
+  s_c6cac961cd7409::t_80752fded8200a 1,4-100,122-128
+  s_c6cac961cd7409::t_109665e33784d7 101-121
+  s_c6cac961cd7409::t_9bbe5fdf9a4570 2-3
+locales/en.json
+  s_c6cac961cd7409::t_b9d1b9e07c0c95 1,4-100,122-128
+  s_c6cac961cd7409::t_9848894b7ca16b 101-121
+  s_c6cac961cd7409::t_c39e64c797091c 2-3
+src/app/tournaments/[id]/layout.tsx
+  s_c6cac961cd7409::t_f734f1193b7e0a 3,24-26,33,37
+src/app/tournaments/[id]/standings/page.tsx
+  s_c6cac961cd7409::t_c4c98c4db7a723 3,15
+src/server/actions/tournament-actions.ts
+  s_c6cac961cd7409::t_344e19068e6b46 5
+  s_c6cac961cd7409::t_b74a9490e3316c 9,11
+src/components/rounds/GenerateRoundButton.tsx
+  s_c6cac961cd7409::t_6e32f73b988434 5,9,22,35
+src/lib/i18n.ts
+  s_c6cac961cd7409::t_a370f0f503ec19 1-36
+src/components/pdf/StandingsDocument.tsx
+  s_c6cac961cd7409::t_15699ac4b4f269 2,40,42-50
+  s_c6cac961cd7409::t_970ceb2ce8431d 56
+src/server/services/export-service.ts
+  s_c6cac961cd7409::t_a011cca46f7961 7
+  s_c6cac961cd7409::t_cc7fe1de3068b8 23-35,50,56-66,85-95
+src/components/rounds/ResultEntryRow.tsx
+  s_c6cac961cd7409::t_9e06779a6cfbe5 3,15-21,23-24,29,44
+src/app/tournaments/page.tsx
+  s_c6cac961cd7409::t_30d799b3f27cd0 3,9-11,19-20,28,31-32,34,38-39,42
+src/app/layout.tsx
+  s_c6cac961cd7409::t_90d38e15220313 3-4,18-19,25,28-30
+src/components/CreateTournamentForm.tsx
+  s_c6cac961cd7409::t_a3b026a01175ff 5,9,24,33,39,46,64
+tsconfig.json
+  s_c6cac961cd7409::t_a5ddc4bfef018c 22-23
+src/components/ExportMenu.tsx
+  s_c6cac961cd7409::t_64fdd0d27721d6 1-2,6-9
+src/components/rounds/CascadeConfirmDialog.tsx
+  s_c6cac961cd7409::t_9e1410d7840de0 3-4,18-20,24,26,28-30,32,40,48
+src/server/services/export-service.test.ts
+  s_c6cac961cd7409::t_4303c57fecb998 36
+  s_c6cac961cd7409::t_036c7e13aa704d 51
+  s_c6cac961cd7409::t_c999d015450aab 43
+src/components/players/PlayerTable.tsx
+  s_c6cac961cd7409::t_37d7e880d1daf2 39
+  s_c6cac961cd7409::t_134574ab10e93e 5,10,22,29-31,42,44,55,66
+README.md
+  s_c6cac961cd7409::t_e9a1cf3985a6c4 336-348
+  s_c6cac961cd7409::t_5f6c6577501855 123-147
+src/components/players/PlayerForm.tsx
+  s_c6cac961cd7409::t_b63da68223d5cb 5,10,22,31,39-42,49,53,59
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "b6957f60e17df4b2c56e5c5dce3cc463cdd7572f",
+  "prompts": {},
+  "sessions": {
+    "s_c6cac961cd7409": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b9e42927-6bc1-484d-bd4a-304bb4506c8d",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Hasan Bozkurt <hb3517@gmail.com>"
+    }
+  }
+}
