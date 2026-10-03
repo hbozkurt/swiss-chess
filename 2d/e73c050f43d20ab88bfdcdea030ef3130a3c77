@@ -1,0 +1,21 @@
+src/app/globals.css
+  s_c6cac961cd7409::t_16978eeb45c360 4-6
+src/app/layout.tsx
+  s_c6cac961cd7409::t_de9204e0e91cff 26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "2de73c050f43d20ab88bfdcdea030ef3130a3c77",
+  "prompts": {},
+  "sessions": {
+    "s_c6cac961cd7409": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b9e42927-6bc1-484d-bd4a-304bb4506c8d",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Hasan Bozkurt <hb3517@gmail.com>"
+    }
+  }
+}
