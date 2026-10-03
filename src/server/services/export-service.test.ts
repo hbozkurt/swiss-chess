@@ -33,14 +33,14 @@ describe('CSV exports', () => {
   it('exports players with name/rating columns', async () => {
     const tournament = await setUpPlayedRound();
     const csv = exportPlayersCsv(db, tournament.id);
-    expect(csv).toContain('name,rating,withdrawn');
+    expect(csv).toContain('Name,Rating,Withdrawn');
     expect(csv).toContain('Alice,2000');
   });
 
   it('exports results with round/board/white/black/result', async () => {
     const tournament = await setUpPlayedRound();
     const csv = exportResultsCsv(db, tournament.id);
-    expect(csv).toContain('round,board,white,black,result,kind');
+    expect(csv).toContain('Round,Board,White,Black,Result,Kind');
     expect(csv).toMatch(/1,1,.+,.+,/);
   });
 
@@ -48,7 +48,7 @@ describe('CSV exports', () => {
     const tournament = await setUpPlayedRound();
     const csv = exportStandingsCsv(db, tournament.id);
     const lines = (await csv).trim().split('\n');
-    expect(lines[0]).toContain('rank,name,rating,score');
+    expect(lines[0]).toContain('Rank,Name,Rating,Score');
     expect(lines.length).toBe(4); // header + 3 players
   });
 });

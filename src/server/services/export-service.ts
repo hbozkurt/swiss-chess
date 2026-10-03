@@ -4,6 +4,7 @@ import type { ReactElement } from 'react';
 import { stringify } from 'csv-stringify/sync';
 import { PairingSheetDocument } from '@/components/pdf/PairingSheetDocument';
 import { StandingsDocument } from '@/components/pdf/StandingsDocument';
+import { t } from '@/lib/i18n';
 import type { Db } from '../db/client';
 import * as gameRepo from '../repositories/game-repo';
 import * as playerRepo from '../repositories/player-repo';
@@ -19,8 +20,19 @@ function playerNameMap(db: Db, tournamentId: string): Map<string, { name: string
 export function exportPlayersCsv(db: Db, tournamentId: string): string {
   const players = playerRepo.listPlayers(db, tournamentId);
   return stringify(
-    players.map((p) => ({ name: p.name, rating: p.rating ?? '', withdrawn: p.withdrawnAt !== null ? 'yes' : '' })),
-    { header: true, columns: ['name', 'rating', 'withdrawn'] },
+    players.map((p) => ({
+      name: p.name,
+      rating: p.rating ?? '',
+      withdrawn: p.withdrawnAt !== null ? t('csv.yesIndicator') : '',
+    })),
+    {
+      header: true,
+      columns: [
+        { key: 'name', header: t('csv.players.name') },
+        { key: 'rating', header: t('csv.players.rating') },
+        { key: 'withdrawn', header: t('csv.players.withdrawn') },
+      ],
+    },
   );
 }
 
@@ -35,13 +47,23 @@ export function exportResultsCsv(db: Db, tournamentId: string): string {
         round: round.roundNumber,
         board: g.boardNumber,
         white: names.get(g.whitePlayerId)?.name ?? g.whitePlayerId,
-        black: g.blackPlayerId ? (names.get(g.blackPlayerId)?.name ?? g.blackPlayerId) : 'bye',
+        black: g.blackPlayerId ? (names.get(g.blackPlayerId)?.name ?? g.blackPlayerId) : t('csv.byeIndicator'),
         result: g.result ?? '',
         kind: g.kind ?? '',
       });
     }
   }
-  return stringify(rows, { header: true, columns: ['round', 'board', 'white', 'black', 'result', 'kind'] });
+  return stringify(rows, {
+    header: true,
+    columns: [
+      { key: 'round', header: t('csv.results.round') },
+      { key: 'board', header: t('csv.results.board') },
+      { key: 'white', header: t('csv.results.white') },
+      { key: 'black', header: t('csv.results.black') },
+      { key: 'result', header: t('csv.results.result') },
+      { key: 'kind', header: t('csv.results.kind') },
+    ],
+  });
 }
 
 export async function exportStandingsCsv(db: Db, tournamentId: string): Promise<string> {
@@ -60,7 +82,17 @@ export async function exportStandingsCsv(db: Db, tournamentId: string): Promise<
   }));
   return stringify(rows, {
     header: true,
-    columns: ['rank', 'name', 'rating', 'score', 'buchholz_cut1', 'sonneborn_berger', 'direct_encounter', 'wins', 'black_games'],
+    columns: [
+      { key: 'rank', header: t('csv.standings.rank') },
+      { key: 'name', header: t('csv.standings.name') },
+      { key: 'rating', header: t('csv.standings.rating') },
+      { key: 'score', header: t('csv.standings.score') },
+      { key: 'buchholz_cut1', header: t('csv.standings.buchholzCut1') },
+      { key: 'sonneborn_berger', header: t('csv.standings.sonnebornBerger') },
+      { key: 'direct_encounter', header: t('csv.standings.directEncounter') },
+      { key: 'wins', header: t('csv.standings.wins') },
+      { key: 'black_games', header: t('csv.standings.blackGames') },
+    ],
   });
 }
 

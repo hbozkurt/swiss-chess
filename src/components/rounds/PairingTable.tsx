@@ -2,12 +2,14 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
+import { useLocale } from '@/hooks/useLocale';
 import type { GameView } from '@/server/actions/round-actions';
 import { updateGameResultAction } from '@/server/actions/round-actions';
 import { CascadeConfirmDialog } from './CascadeConfirmDialog';
 import { ResultEntryRow } from './ResultEntryRow';
 
 export function PairingTable({ tournamentId, games }: { tournamentId: string; games: GameView[] }) {
+  const t = useLocale();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [pendingConfirmation, setPendingConfirmation] = useState<{
@@ -40,7 +42,7 @@ export function PairingTable({ tournamentId, games }: { tournamentId: string; ga
         setPendingConfirmation(null);
         router.refresh();
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to update result');
+        setError(err instanceof Error ? err.message : t('errors.updateResultFailed'));
       }
     });
   }
@@ -53,10 +55,10 @@ export function PairingTable({ tournamentId, games }: { tournamentId: string; ga
       <table className="w-full overflow-hidden rounded-lg border border-zinc-200 bg-white text-sm">
         <thead>
           <tr className="border-b border-zinc-200 bg-zinc-50 text-left text-xs font-medium text-zinc-600">
-            <th className="px-4 py-2 w-14">Bd</th>
-            <th className="px-4 py-2">White</th>
-            <th className="px-4 py-2 text-center w-40">Result</th>
-            <th className="px-4 py-2">Black</th>
+            <th className="px-4 py-2 w-14">{t('rounds.table.board')}</th>
+            <th className="px-4 py-2">{t('rounds.table.white')}</th>
+            <th className="px-4 py-2 text-center w-40">{t('rounds.table.result')}</th>
+            <th className="px-4 py-2">{t('rounds.table.black')}</th>
           </tr>
         </thead>
         <tbody>

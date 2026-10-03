@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { PairingTable } from '@/components/rounds/PairingTable';
 import { GenerateRoundButton } from '@/components/rounds/GenerateRoundButton';
+import { t } from '@/lib/i18n';
 import { getTournamentAction } from '@/server/actions/tournament-actions';
 import { getLiveRoundsAction, getRoundGamesAction } from '@/server/actions/round-actions';
 import { listPlayersAction } from '@/server/actions/player-actions';
@@ -40,7 +41,7 @@ export default async function RoundPage({ params }: { params: Promise<{ id: stri
                 r.roundNumber === roundNumber ? 'bg-zinc-900 text-white' : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200'
               }`}
             >
-              Round {r.roundNumber}
+              {t('rounds.roundLabel', { number: r.roundNumber })}
             </Link>
           ))}
         </div>
@@ -48,13 +49,13 @@ export default async function RoundPage({ params }: { params: Promise<{ id: stri
           href={`/api/tournaments/${id}/export/pairing-sheet.pdf?round=${roundNumber}`}
           className="text-xs text-zinc-500 hover:underline"
         >
-          Export pairing sheet (PDF)
+          {t('rounds.exportPairingSheet')}
         </a>
       </div>
 
       {needsFirstRound ? (
         activePlayers.length < 2 ? (
-          <p className="text-sm text-zinc-500">Register at least 2 players before generating Round 1.</p>
+          <p className="text-sm text-zinc-500">{t('rounds.needPlayersNotice')}</p>
         ) : (
           <GenerateRoundButton tournamentId={id} />
         )
@@ -64,11 +65,11 @@ export default async function RoundPage({ params }: { params: Promise<{ id: stri
           <div className="mt-4">
             {canGenerateNext && <GenerateRoundButton tournamentId={id} />}
             {isLatestRound && !allResultsEntered && (
-              <p className="text-sm text-zinc-500">Enter all results to generate the next round.</p>
+              <p className="text-sm text-zinc-500">{t('rounds.enterResultsNotice')}</p>
             )}
             {isLatestRound && liveRounds.length >= tournament.totalRounds && (
               <p className="text-sm font-medium text-emerald-700">
-                All {tournament.totalRounds} rounds complete — see Standings for final results.
+                {t('rounds.allRoundsComplete', { total: tournament.totalRounds })}
               </p>
             )}
           </div>

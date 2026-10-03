@@ -120,6 +120,31 @@ Repeat Part 2: open a terminal, `cd` into the folder, run `npm run dev`, open
 the browser. Your tournaments, players, and results will all still be there,
 exactly as you left them.
 
+### Switching the app to Turkish
+
+The app can display everything — buttons, labels, messages, printed PDFs,
+exported spreadsheets — in **Turkish** instead of English. This is a
+one-time setting for the computer the app runs on; it isn't something you
+switch back and forth inside the app itself.
+
+1. In the project folder, create a new file named exactly `.env.local`
+   (there's no need to unzip or install anything extra — just a plain text
+   file).
+2. Open it in any plain text editor (TextEdit, Notepad) and put this single
+   line inside it:
+
+   ```
+   NEXT_PUBLIC_LOCALE=tr
+   ```
+3. Save the file, then stop the app if it's running (`Ctrl + C` in the
+   terminal) and start it again with `npm run dev` (see [Part
+   2](#part-2---running-the-app-every-time-you-use-it)).
+
+The whole app — including exported CSV files and printed PDFs — will now be
+in Turkish. To switch back to English, either delete the `.env.local` file
+or change the line to `NEXT_PUBLIC_LOCALE=en`, then restart the app the same
+way.
+
 ### If something goes wrong
 
 - **"command not found: npm"** — Node.js isn't installed correctly. Go back
@@ -308,3 +333,16 @@ how to work on it.
   isolation. The `@echecs/tournament` package is intentionally **not**
   used; see the code comments in `src/server/domain/tournament-engine.ts`
   for why.
+- **Localization:** every user-visible string lives in `locales/en.json` and
+  `locales/tr.json` as flat `"some.key": "text"` pairs (supports `{name}`
+  placeholders, e.g. `"{count} rounds"`). The active locale is resolved once
+  from `NEXT_PUBLIC_LOCALE` in `src/lib/i18n.ts` and is fixed for the life of
+  the running app — there's no in-app language switcher. Next.js Server
+  Components, server actions, and the PDF documents under
+  `src/components/pdf/` can't use React context, so they import the plain
+  `t(key, vars?)` function from `src/lib/i18n.ts` directly; Client Components
+  use the `useLocale()` hook (`src/hooks/useLocale.ts`), backed by
+  `LocaleProvider` (`src/components/LocaleProvider.tsx`, mounted once in
+  `src/app/layout.tsx`) — both resolve to the exact same dictionary. To add a
+  new piece of UI text, add its key to **both** JSON files, then call
+  `t('your.key')` (or `useLocale()`'s returned function) where it's rendered.

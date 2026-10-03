@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { t } from '@/lib/i18n';
 import { getTournamentAction } from '@/server/actions/tournament-actions';
 import { getLiveRoundsAction } from '@/server/actions/round-actions';
 
@@ -20,20 +21,20 @@ export default async function TournamentLayout({
   const currentRound = liveRounds.length > 0 ? liveRounds[liveRounds.length - 1]!.roundNumber : 1;
 
   const tabs = [
-    { href: `/tournaments/${id}/players`, label: 'Players' },
-    { href: `/tournaments/${id}/rounds/${currentRound}`, label: 'Rounds' },
-    { href: `/tournaments/${id}/standings`, label: 'Standings' },
+    { href: `/tournaments/${id}/players`, label: t('tournamentLayout.tabs.players') },
+    { href: `/tournaments/${id}/rounds/${currentRound}`, label: t('tournamentLayout.tabs.rounds') },
+    { href: `/tournaments/${id}/standings`, label: t('tournamentLayout.tabs.standings') },
   ];
 
   return (
     <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-10">
       <div className="mb-6">
         <Link href="/tournaments" className="text-xs text-zinc-500 hover:underline">
-          ← All tournaments
+          {t('tournamentLayout.backLink')}
         </Link>
         <h1 className="mt-1 text-2xl font-semibold text-zinc-900">{tournament.name}</h1>
         <p className="text-sm text-zinc-600">
-          {tournament.totalRounds} rounds · round {liveRounds.length} of {tournament.totalRounds} generated
+          {t('tournamentLayout.roundsProgress', { total: tournament.totalRounds, current: liveRounds.length })}
         </p>
       </div>
       <nav className="mb-6 flex gap-1 border-b border-zinc-200">

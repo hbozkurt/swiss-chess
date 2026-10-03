@@ -1,12 +1,7 @@
 'use client';
 
+import { useLocale } from '@/hooks/useLocale';
 import type { GameView } from '@/server/actions/round-actions';
-
-const RESULT_OPTIONS: { label: string; result: number }[] = [
-  { label: '1 – 0', result: 1 },
-  { label: '½ – ½', result: 0.5 },
-  { label: '0 – 1', result: 0 },
-];
 
 export function ResultEntryRow({
   game,
@@ -17,13 +12,21 @@ export function ResultEntryRow({
   onSelectResult: (gameId: string, result: number) => void;
   disabled: boolean;
 }) {
+  const t = useLocale();
+  const resultOptions: { label: string; result: number }[] = [
+    { label: t('rounds.resultOptions.win'), result: 1 },
+    { label: t('rounds.resultOptions.draw'), result: 0.5 },
+    { label: t('rounds.resultOptions.loss'), result: 0 },
+  ];
+
   if (game.black === null) {
-    const label = game.kind === 'half-bye' ? 'Half-point bye' : game.kind === 'zero-bye' ? 'Bye (no points)' : 'Bye';
+    const label =
+      game.kind === 'half-bye' ? t('rounds.byeHalf') : game.kind === 'zero-bye' ? t('rounds.byeZero') : t('rounds.byeFull');
     return (
       <tr className="border-b border-zinc-100 last:border-0">
         <td className="px-4 py-2 text-zinc-500">{game.boardNumber}</td>
         <td className="px-4 py-2 font-medium text-zinc-900">{game.white.name}</td>
-        <td className="px-4 py-2 text-center text-zinc-500">—</td>
+        <td className="px-4 py-2 text-center text-zinc-500">{t('common.dash')}</td>
         <td className="px-4 py-2 text-zinc-400 italic">{label}</td>
       </tr>
     );
@@ -38,7 +41,7 @@ export function ResultEntryRow({
       </td>
       <td className="px-4 py-2 text-center">
         <div className="inline-flex gap-1">
-          {RESULT_OPTIONS.map((opt) => (
+          {resultOptions.map((opt) => (
             <button
               key={opt.label}
               type="button"

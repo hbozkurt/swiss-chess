@@ -1,4 +1,5 @@
 import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
+import { t } from '@/lib/i18n';
 
 const styles = StyleSheet.create({
   page: { padding: 32, fontSize: 10, fontFamily: 'Helvetica' },
@@ -36,23 +37,23 @@ export function StandingsDocument(props: { tournamentName: string; rows: Standin
     <Document>
       <Page size="A4" style={styles.page}>
         <Text style={styles.title}>{props.tournamentName}</Text>
-        <Text style={styles.subtitle}>Final Standings</Text>
+        <Text style={styles.subtitle}>{t('pdf.standings.subtitle')}</Text>
         <View style={styles.headerRow}>
-          <Text style={styles.rank}>#</Text>
-          <Text style={styles.name}>Name</Text>
-          <Text style={styles.rating}>Rtg</Text>
-          <Text style={styles.score}>Pts</Text>
-          <Text style={styles.tb}>Bu-1</Text>
-          <Text style={styles.tb}>SB</Text>
-          <Text style={styles.tb}>DE</Text>
-          <Text style={styles.tb}>Wins</Text>
-          <Text style={styles.tb}>Blk</Text>
+          <Text style={styles.rank}>{t('standings.table.rank')}</Text>
+          <Text style={styles.name}>{t('standings.table.name')}</Text>
+          <Text style={styles.rating}>{t('standings.table.rating')}</Text>
+          <Text style={styles.score}>{t('standings.table.points')}</Text>
+          <Text style={styles.tb}>{t('standings.table.buchholz')}</Text>
+          <Text style={styles.tb}>{t('standings.table.sonnebornBerger')}</Text>
+          <Text style={styles.tb}>{t('standings.table.directEncounter')}</Text>
+          <Text style={styles.tb}>{t('standings.table.wins')}</Text>
+          <Text style={styles.tb}>{t('standings.table.blackGames')}</Text>
         </View>
         {props.rows.map((row) => (
           <View style={styles.row} key={row.name + row.rank}>
             <Text style={styles.rank}>{row.rank}</Text>
             <Text style={styles.name}>{row.name}</Text>
-            <Text style={styles.rating}>{row.rating ?? '—'}</Text>
+            <Text style={styles.rating}>{row.rating ?? t('common.dash')}</Text>
             <Text style={styles.score}>{row.score}</Text>
             <Text style={styles.tb}>{row.buchholzCut1}</Text>
             <Text style={styles.tb}>{row.sonnebornBerger}</Text>

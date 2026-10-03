@@ -1,10 +1,12 @@
+import { t } from '@/lib/i18n';
+
 export function ExportMenu({ tournamentId }: { tournamentId: string }) {
   const base = `/api/tournaments/${tournamentId}/export`;
   const links = [
-    { href: `${base}/players.csv`, label: 'Players (CSV)' },
-    { href: `${base}/results.csv`, label: 'Results (CSV)' },
-    { href: `${base}/standings.csv`, label: 'Standings (CSV)' },
-    { href: `${base}/standings.pdf`, label: 'Standings (PDF)' },
+    { href: `${base}/players.csv`, label: t('exports.playersCsv') },
+    { href: `${base}/results.csv`, label: t('exports.resultsCsv') },
+    { href: `${base}/standings.csv`, label: t('exports.standingsCsv') },
+    { href: `${base}/standings.pdf`, label: t('exports.standingsPdf') },
   ];
   return (
     <div className="flex flex-wrap gap-3 text-xs">
