@@ -47,7 +47,7 @@ export function ResultEntryRow({
               type="button"
               disabled={disabled}
               onClick={() => onSelectResult(game.id, opt.result)}
-              className={`rounded px-2 py-1 text-xs font-medium disabled:opacity-50 ${
+              className={`whitespace-nowrap rounded px-2 py-1 text-xs font-medium disabled:opacity-50 ${
                 game.result === opt.result ? 'bg-zinc-900 text-white' : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200'
               }`}
             >
