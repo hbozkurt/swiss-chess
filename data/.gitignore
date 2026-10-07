@@ -1,0 +1,4 @@
+# local SQLite database (runtime state, not source)
+*.db
+*.db-shm
+*.db-wal
