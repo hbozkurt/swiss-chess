@@ -1,0 +1,14 @@
+data/.gitignore
+  h_c457053ef2dd97 1-4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.15",
+  "base_commit_sha": "4e2b12d95adebab955b8f656e7a56d85bc7986d9",
+  "prompts": {},
+  "humans": {
+    "h_c457053ef2dd97": {
+      "author": "Hasan Bozkurt <hb3517@gmail.com>"
+    }
+  }
+}
